@@ -21,17 +21,15 @@ function Gameboard() {
 
         // chooseCell() takes 3 arguments and adds the player's mark to their choice of [row, column]
         const chooseCell = (row, column, player) => {
+  
             const choiceCell = board[row][column];
-                    
+            
                 if (choiceCell.getMark() === " ") {
-                    console.log(
-                        `Putting Player ${player}'s mark into row ${row}, column ${column}...` // LOGS
-                    );
+                    console.log(`Putting Player ${player}'s mark into row ${row}, column ${column}...`);
                     choiceCell.addMark(player);
-                } else {
-                    return;
-                }
+                } 
         };
+
      
         // printBoard logs the current state of the board
         const printBoard = () => {
@@ -196,8 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const OName = document.querySelector(".O");
             const ONameValue = OName.value;
 
-            console.log(currentPlayer); 
-            if (currentPlayer === "X") {
+            if (XNameValue === "" || ONameValue === "") {
+                turnDisplay.innerHTML = "";
+            } else if(currentPlayer === "X") {
                 turnDisplay.innerHTML = `${XNameValue}'s turn!`;
             } else if (currentPlayer === "O") {
                 turnDisplay.innerHTML = `${ONameValue}'s turn!`;   
@@ -205,92 +204,50 @@ document.addEventListener("DOMContentLoaded", () => {
             return XNameValue, ONameValue;
         }
 
-            const updateBoard = () => {
+        const updateBoard = () => {
     
-                const startRestart = document.querySelector(".start-restart");
+            const startRestart = document.querySelector(".start-restart");
 
-                startRestart.addEventListener("click", event => {
-                    event.preventDefault();
-                    updateTurnDisplay();
-                });
+            startRestart.addEventListener("click", event => {
+                event.preventDefault();
+                updateTurnDisplay();
+            });
 
-                // logs the player whose turn it is
-                let currentBoard = game.printNewRound();
+            // logs the player whose turn it is
+            let currentBoard = game.printNewRound();
 
-                // logs the 2D array
-                console.log(currentBoard);
+            // logs the 2D array
+            console.log(currentBoard);
                 
-                // cells of the columns are extracted and placed into a 1D array
-                const flattenedBoard = currentBoard.flat();
+            // cells of the columns are extracted and placed into a 1D array
+            const flattenedBoard = currentBoard.flat();
                 
-                flattenedBoard.forEach((value, index) => {
-                    if (cells[index]) {
-                        cells[index].textContent = value;
+            flattenedBoard.forEach((value, index) => {
+                if (cells[index]) {
+                    cells[index].textContent = value;
+                }
+            });
+        }
+
+        const clickHandlerBoard = () => {        
+            cells.forEach((cell) => {
+                cell.addEventListener("click", () => {
+                    if (cell.textContent === "X" || cell.textContent === "O") {
+                        turnDisplay.innerHTML = "Choose an empty cell.";
+                    } else {
+                        let choiceCell = cell.dataset.coordinate;
+                        choiceCell = choiceCell.split(",");
+                        currentPlayer = game.getActivePlayer().mark;
+                        game.playRound(choiceCell[0], choiceCell[1], currentPlayer);
+                        updateBoard();   
+                        updateTurnDisplay();
+                                             
                     }
                 });
-            }
-
-            const clickHandlerBoard = () => {        
-                cells.forEach((cell) => {
-                    cell.addEventListener("click", () => {
-                        if (cell.textContent === "X" || cell.textContent === "O") {
-                            turnDisplay.innerHTML = "Choose an empty cell.";
-                        } else {
-                            let choiceCell = cell.dataset.coordinate;
-                            choiceCell = choiceCell.split(",");
-                            currentPlayer = game.getActivePlayer().mark;
-                            game.playRound(choiceCell[0], choiceCell[1], currentPlayer);
-                        }
-                        
-                        const currentBoard = game.printNewRound();
-
-                        // const a = currentBoard[0][0]; 
-                        // const b = currentBoard[0][1];  
-                        // const c = currentBoard[0][2]; 
-        
-                        // const d = currentBoard[1][0]; 
-                        // const e = currentBoard[1][1];  
-                        // const f = currentBoard[1][2];  
-        
-                        // const g = currentBoard[2][0];  
-                        // const h = currentBoard[2][1]; 
-                        // const i = currentBoard[2][2]; 
-            
-                        // // checks for a winner
-                        // if ((a !== " " && a === b && b === c) || (a !== " " && a === d && d === g) || (a !== " " && a === e && e === i)) {
-                        //     let winner = a;
-                        //     // board.printBoard();
-                        //     console.log(`Player ${winner} wins!`);
-                        // } else if ((e !== " " && d === e && e === f) || (e !== " " && b === e && e === h) || (e !== " " && c === e && e === g)) {
-                        //     let winner = e;
-                        //     // board.printBoard();
-                        //     console.log(`Player ${winner} wins!`);
-                        // } else if ((i !== " " && g === h && h === i) || (i !== " " && c === f && f === i)) {
-                        //     let winner = i;
-                        //     // logs the current state of the board
-                        //     // board.printBoard(); // LOGS
-                        //     // logs the winner and returns
-                        //     console.log(`Player ${winner} wins!`);  // LOGS
-                        // } else {
-                        //     return;
-                        // }
-
-                        // if (winner === "X") {
-                        //     turnDisplay.innerHTML = `${XNameValue} wins!`;
-                        //     return;
-                        // } else if (winner === "O") {
-                        //     turnDisplay.innerHTML = `${ONameValue} wins!`;
-                        //     return;
-                        // }
-                        updateBoard();
-                        updateTurnDisplay();
-                    });
-                });
-            }
-            clickHandlerBoard();
-
-            // when no click, updateScreen logs which player's turn it is and logs the board
+            });
             updateBoard();
+        }
+        clickHandlerBoard();
     }
 
     const gameDisplay = displayController();

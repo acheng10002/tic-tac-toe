@@ -221,3 +221,31 @@ function GameController(
 /* initializes the game 
 game is an object with methods to play a round, playRound and get the active player, getActivePlayer */
 const game = GameController();
+
+// const chooseCell = (row, column, player) => {
+//     const choiceCell = board[row][column];
+            
+//         if (choiceCell.getMark() === " ") {
+//             console.log(
+//                 `Putting Player ${player}'s mark into row ${row}, column ${column}...` // LOGS
+//             );
+//             choiceCell.addMark(player);
+//         } 
+// };
+
+        //     // player's choice of Cell
+        //     const choice = [row, column];
+
+        //     const emptyCells = board.filter((row) => row[column].getMark() === 0).map(row => row[column]);
+            
+        //     if (!emptyCells) return;
+
+        //     const foundChoice = emptyCells.find(
+                
+        //         (emptyCell) => emptyCell.length === choice.length && emptyCell.every((row, column) => row === choice[0] && column === choice[1])
+        //     );
+
+        //     if (foundChoice === false) return;
+
+        //     board[row][column].addMark(player);
+        // };
