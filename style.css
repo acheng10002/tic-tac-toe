@@ -46,13 +46,15 @@ input {
 label {
     width: 140%;
 }
-.playerX, 
-.playerO {
-    padding-bottom: 5vh;
-}
+
+.X, 
+.O {
+    margin-bottom: 5vh;
+} 
 
 .start-restart {
-    padding: 1vh 2vw 1vh 2vw;
+    padding: 1.5vh 2vw 1.5vh 2vw;
+    margin: 1vh 1vw 0vh 1vw;
     border-radius: 1rem;
     width: 140%;
     font-size: 1.9vw; 

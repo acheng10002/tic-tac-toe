@@ -65,6 +65,7 @@ function Cell() {
 
 /* GameController takes two variables as arguments */
 function GameController(
+    turnDisplay = document.querySelector(".turn-display"),
     playerXName = "Player X",
     playerYName = "Player 0"
     ) {
@@ -90,6 +91,7 @@ function GameController(
     const switchPlayerTurn = () => {
     
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
+        console.log("Active Player after switch:", activePlayer);
     };
     
     // getActivePlayer gets the player object whose turn it is
@@ -103,19 +105,11 @@ function GameController(
 
         return currentBoard;
     };
-    
-    // playRound takes two parameters, row and column, logs which player is placing there mark where, 
-    // checks for a winner, logs the current state of the board, and logs the winner and returns if there is a winner   
-    const playRound = (row, column, player) => {
-        // player = getActivePlayer().mark;
 
-        // chooseCell takes in the row and column arguments
-        // getActivePlayer().mark is the argument for the player parameter
-        board.chooseCell(row, column, player);
-    
+    const checkForWinner = () => {
         // getBoard gets the board, and getMark gets the mark of every cell in the board
         const checkBoard = board.getBoard();
-
+    
         const a = checkBoard[0][0].getMark(); 
         const b = checkBoard[0][1].getMark();  
         const c = checkBoard[0][2].getMark(); 
@@ -130,38 +124,56 @@ function GameController(
             
         // checks for a winner
         if ((a !== " " && a === b && b === c) || (a !== " " && a === d && d === g) || (a !== " " && a === e && e === i)) {
-            let winner = a;
-            // board.printBoard();
-            console.log(`Player ${winner} wins!`);
-            // winnerDisplay();
-            return;
+            console.log(`Player ${a} wins!`);
+            return a;
         
         } else if ((e !== " " && d === e && e === f) || (e !== " " && b === e && e === h) || (e !== " " && c === e && e === g)) {
-            let winner = e;
-            // board.printBoard();
-            console.log(`Player ${winner} wins!`);
-            // winnerDisplay();
-            return;
+            console.log(`Player ${e} wins!`);
+            return e;
         
         } else if ((i !== " " && g === h && h === i) || (i !== " " && c === f && f === i)) {
-            let winner = i;
-
-            // logs the current state of the board
-            // board.printBoard(); // LOGS
-
-            // logs the winner and returns
-            console.log(`Player ${winner} wins!`);  // LOGS
-            // winnerDisplay();
-            return;
+            console.log(`Player ${i} wins!`);  
+            return i;
         } else {
-            switchPlayerTurn();
+            // switchPlayerTurn();
+            return null;
         }
-        // logs the current state of the board
-        // printNewRound();
     };
     
-    //**** */ logs the current state of the board
-    // printNewRound();
+    // playRound takes two parameters, row and column, logs which player is placing there mark where, 
+    // checks for a winner, logs the current state of the board, and logs the winner and returns if there is a winner   
+    const playRound = (row, column, player) => {
+        console.log("Active Player before play:", activePlayer);
+
+        // let turnDisplay = document.querySelector(".turn-display");
+        const XName = document.querySelector(".X");
+        const XNameValue = XName.value;
+        const OName = document.querySelector(".O");
+        const ONameValue = OName.value;
+
+        // chooseCell takes in the row and column arguments
+        // getActivePlayer().mark is the argument for the player parameter
+        board.chooseCell(row, column, player);
+        const winner = checkForWinner();
+        let winnerName;
+        console.log("Winner: ", winner);
+        if (winner != null) {
+            console.log(XNameValue);
+            console.log(ONameValue);
+            if (winner === "X") {
+                winnerName = XNameValue;
+            } else if (winner === "O") {
+                winnerName = ONameValue;
+            }
+            console.log("Winner Name: ", winnerName);
+            turnDisplay.innerHTML = `Congratulations ${winnerName}, you won!`;
+            return true; 
+        } else {
+            switchPlayerTurn();
+            console.log("Active Player after no win:", activePlayer);
+        }
+        return false;
+    };
       
     return {
         playRound,
@@ -171,17 +183,16 @@ function GameController(
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // DOM reference to div with "turn-display" class
+    const turnDisplay = document.querySelector(".turn-display");
 
     function displayController() {
 
         // creates a private game object
-        const game = GameController();
+        const game = GameController(turnDisplay);
     
         // DOM reference to all the cells
         const cells = document.querySelectorAll(".cell");
-     
-        // DOM reference to div with "turn-display" class
-        const turnDisplay = document.querySelector(".turn-display");
 
         let currentPlayer;
         
@@ -237,11 +248,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     } else {
                         let choiceCell = cell.dataset.coordinate;
                         choiceCell = choiceCell.split(",");
+
                         currentPlayer = game.getActivePlayer().mark;
+                        
                         game.playRound(choiceCell[0], choiceCell[1], currentPlayer);
+                        
                         updateBoard();   
                         updateTurnDisplay();
-                                             
                     }
                 });
             });
@@ -249,6 +262,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         clickHandlerBoard();
     }
-
     const gameDisplay = displayController();
 });
