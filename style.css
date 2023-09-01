@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.parent-container {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template: 0.5fr 0.5fr 100fr / 1fr 2.5fr;
+    justify-items: center;
+}
+
+.game-title {
+    padding-top: 6vh;
+    grid-area: 1 / 2 / 2 / 3;
+    place-self: end center;
+    font-size: 5vw;
+    font-weight: 900;
+}
+
+.turn-display {
+    padding: 4vh 0vh 2vh 0vh;
+    grid-area: 2 / 2 / 3 / 3;
+    place-self: end center;
+    font-size: 3vw;
+    font-weight: 300;
+}
+
+.inputs-plus-button {
+    padding: 1vh 0vw 1vh 8vw;
+    margin: 0;
+    grid-area: 3 / 1 / 4 / 2;
+    font-size: 1.9vw;
+}
+
+input {
+    padding: 1vh 1vw 1vh 1vw;
+    margin: 0;
+    width: 140%;
+    font-size: 3vh;
+}
+
+label {
+    width: 140%;
+}
+.playerX, 
+.playerO {
+    padding-bottom: 5vh;
+}
+
+.start-restart {
+    padding: 1vh 2vw 1vh 2vw;
+    border-radius: 1rem;
+    width: 140%;
+    font-size: 1.9vw; 
+}
+
+
+.game-board {
+    grid-area: 3 / 2 / 4 / 3;
+    height: 36vh;
+    width: 36vw;
+    place-self: start center;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr); 
+}
+
+.square {
+    width: 100%;
+    padding-bottom: 100%;   /* 1: 1 Aspect Ratio */
+                            /* sets the padding to be equal to the width fo the element */
+    position: relative;
+}
+
+.cell {
+    border: 0.5px solid black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    place-items: center;
+    font-size: 5rem;
+}

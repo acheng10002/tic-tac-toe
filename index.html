@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Tic Tac Toe</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="parent-container">
+        <div></div>
+        <div class="game-title">TIC-TAC-TOE</div>
+        <div class="turn-display"></div>
+        <div class="inputs-plus-button">
+            <form>
+                <div class="playerX">
+                    <label for="playerX">Enter name of player X:</label>
+                    <input type="text" class="X" name="playerX">
+                </div>
+                <div class="playerO">
+                    <label for="playerO">Enter name of player O:</label>
+                    <input type="text" class="O" name="playerO">
+                </div>
+                <div class="start-game">
+                    <button type="submit" class="start-restart">Start/Restart the Game</button>
+                </div>
+            </form>
+        </div>
+        <div class="game-board">
+            <div class="square">
+                <button class="cell" data-coordinate="0,0"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="0,1"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="0,2"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="1,0"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="1,1"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="1,2"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="2,0"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="2,1"></button>
+            </div>
+            <div class="square">
+                <button class="cell" data-coordinate="2,2"></button>
+            </div>
+        </div>
+    </div>
+    <script src="script2.js">   
+    </script>
+  </body>
+</html>
